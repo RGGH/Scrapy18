@@ -11,4 +11,4 @@
         request = Request(url = self.start_urls, callback=self.parse)
         yield request
         
-        https://redandgreen.co.uk/crapy-start_urls-from-csv/
+https://redandgreen.co.uk/crapy-start_urls-from-csv/
