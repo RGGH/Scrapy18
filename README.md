@@ -12,3 +12,5 @@
         yield request
         
 https://redandgreen.co.uk/scrapy-start_urls-from-csv/
+
+https://youtu.be/niLzURng4co
