@@ -9,6 +9,7 @@ import tldextract
 class Lakspider(Spider):
     name = 'lakspider'
 
+    # read csv with just url per line
     with open('urls.csv') as file:
         start_urls = [line.strip() for line in file]
 
@@ -21,13 +22,20 @@ class Lakspider(Spider):
             html = response.body
             soup = BeautifulSoup(html, 'lxml')
             text = soup.get_text()
+            
+            # add more specific here if required 
+            # eg title = soup.find("title")
+            #    heading = soup.find("h1")
     
+            # get the domain for the file name
             domain = tldextract.extract(response.request.url)[1]
             path = urlparse(response.request.url)[2].replace("/", "")
     
+            # export the text
             with open(f'{domain}.txt', 'a') as fp:
                 fp.write(text)
-    
+                
+            # export the html
             with open(f'{domain} {path}.html', 'wb') as fp:
                 fp.write(response.body)
 
