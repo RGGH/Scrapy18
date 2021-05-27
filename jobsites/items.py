@@ -9,5 +9,5 @@ import scrapy
 class JobsItem(scrapy.Item):
 
     url = scrapy.Field()
-    desc = scrapy.Field()
+    txt = scrapy.Field()    
 
