@@ -8,6 +8,8 @@ from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from scrapy.crawler import CrawlerProcess
 from scrapy import Request
+from urllib.parse import urlparse
+import tldextract
 
 class LkSpider(CrawlSpider):
     name = 'multi_spider'
@@ -26,15 +28,16 @@ class LkSpider(CrawlSpider):
     )
 
     def parse_item(self, response):
-        
-        #description is the text from all the paragraphs 
+
+        # get the domain for the file name
+        domain = tldextract.extract(response.request.url)[1]
+        path = urlparse(response.request.url)[2].replace("/", "")
+
         descriptions = response.xpath('*//p/text()').getall()
         description = ''.join(descriptions)
-        description = description[:999]
-        
-        # create file in an output folder, with name of domain followed by name of page
+        description = description[:1200]
         filename = response.url.split("/")[-2] + '.txt'
-        with open(filename, 'w') as f:
+        with open("output/" + domain + "_" + filename, 'w') as f:
             f.write(description)
 
 # main driver
