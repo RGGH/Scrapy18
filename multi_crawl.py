@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+#|r|e|d|a|n|d|g|r|e|e|n|.|c|o|.|u|k|
+#+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
 import scrapy
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
@@ -21,13 +26,18 @@ class LkSpider(CrawlSpider):
     )
 
     def parse_item(self, response):
+        
+        #description is the text from all the paragraphs 
         descriptions = response.xpath('*//p/text()').getall()
         description = ''.join(descriptions)
         description = description[:999]
+        
+        # create file in an output folder, with name of domain followed by name of page
         filename = response.url.split("/")[-2] + '.txt'
         with open(filename, 'w') as f:
             f.write(description)
 
+# main driver
 if __name__ == "__main__":
     process = CrawlerProcess()
     process.crawl(LkSpider)
